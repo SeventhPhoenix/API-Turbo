@@ -1,5 +1,6 @@
 from flask import *
 
+# Create Flask
 class Flask_API:
     def __init__(self, app_name):
         self.app = Flask(app_name)
