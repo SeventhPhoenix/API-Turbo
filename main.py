@@ -11,7 +11,7 @@ def home(extra=None):
 # Request URL
 @app.add_endpoint('/request', methods=['GET'])
 @app.add_endpoint('/request/<path:extra>', methods=['GET'])
-def home(extra=None):
+def request_one(extra=None):
     token = request.headers.get('bearer')
     if token != str(221124):
         abort(503)
