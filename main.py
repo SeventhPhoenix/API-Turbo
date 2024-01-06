@@ -1,4 +1,4 @@
-from api_turbo.apibuilder import Flask_API, request, abort
+from API.builder import Flask_API, request, abort
 
 app = Flask_API('Example Name')
 
