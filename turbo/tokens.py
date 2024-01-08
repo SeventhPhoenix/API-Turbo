@@ -7,11 +7,24 @@ dotenv.load_dotenv(override=True)
 SECRET_KEY = os.environ['SECRET_KEY']
 
 def generate_token(user_id: int, user_name: str, expiration_hours: int = 1):
+    """
+    Generates a token for the given user ID and user name with an optional expiration time.
+
+    Parameters:
+        user_id (int): The ID of the user.
+        user_name (str): The name of the user.
+        expiration_hours (int, optional): The number of hours until the token expires. Defaults to 1.
+
+    Returns:
+        str: The generated token.
+
+    """
     current_time = datetime.datetime.utcnow()
     
     payload = {
         'user_id': user_id,
         'user_name': user_name,
+        'iss': 'Creatonix.AI',
         'iat': current_time,
     }
 
@@ -26,17 +39,32 @@ def generate_token(user_id: int, user_name: str, expiration_hours: int = 1):
     return token
 
 def validate_token(token, pl=False):
+    """
+    Validates the given token by decoding it using JWT.
+    
+    Args:
+        token (str): The token to validate.
+        pl (bool, optional): Flag indicating whether to return the payload of the token. 
+                             Defaults to False.
+    
+    Returns:
+        bool or dict: If `pl` is False, returns True if the token is valid, else False. 
+                      If `pl` is True, returns the payload of the token if valid, else False.
+    """
     try:
         # Decode the token
-        payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-
-        print('Valid Token')
+        payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'], verify=True, issuer='Creatonix.AI')
+        
+        print('\nValid Token\n')
         return True if not pl else payload
     except jwt.ExpiredSignatureError:
         # Token has expired
-        print('Expired Token')
-        return None
+        print('\nExpired Token\n')
+
+        # Add new token request functionality
+
+        return False
     except jwt.InvalidTokenError:
         # Invalid token
-        print('Invalid token')
+        print('\nInvalid Token\n')
         return False

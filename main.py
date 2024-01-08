@@ -1,4 +1,4 @@
-from turbo import FlaskAPI, request, abort, jsonify, validate_token
+from turbo import FlaskAPI, request, abort, jsonify, validate_token, send_file
 
 app = FlaskAPI(__name__)
 
@@ -17,6 +17,7 @@ def request_one(extra=None):
     request_token = request.headers.get('bearer')
     if not validate_token(token=request_token):
         abort(403)
+    send_file('test.py', mimetype='text/plain', as_attachment=True)
     return jsonify({'message': 'Token is valid'}), 200
 
 
