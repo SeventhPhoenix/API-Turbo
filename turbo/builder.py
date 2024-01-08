@@ -1,7 +1,7 @@
 from flask import *
 
 # Create Flask
-class Flask_API:
+class FlaskAPI:
     def __init__(self, app_name):
         self.app = Flask(app_name)
         self.endpoints = {}
@@ -13,5 +13,5 @@ class Flask_API:
             return handler
         return decorator
 
-    def run(self, host='127.0.0.1', port=None, debug=False):
+    def start_server(self, host='127.0.0.1', port=None, debug=False):
         self.app.run(host=host, port=port, debug=debug)
