@@ -4,7 +4,7 @@ import os, dotenv, datetime, jwt
 dotenv.load_dotenv(override=True)
 
 # Secret key to sign and verify the tokens
-SECRET_KEY = os.environ['KEY']
+SECRET_KEY = os.environ['SECRET_KEY']
 
 def generate_token(user_id: int, user_name: str, expiration_hours: int = 1):
     current_time = datetime.datetime.utcnow()
@@ -29,7 +29,7 @@ def validate_token(token, pl=False):
     try:
         # Decode the token
         payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-        
+
         print('Valid Token')
         return True if not pl else payload
     except jwt.ExpiredSignatureError:
