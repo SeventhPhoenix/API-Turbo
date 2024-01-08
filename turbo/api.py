@@ -13,5 +13,5 @@ class FlaskAPI:
             return handler
         return decorator
 
-    def start_server(self, host='127.0.0.1', port=None, debug=False):
+    def start_server(self, host='0.0.0.0', port=5000, debug=False):
         self.app.run(host=host, port=port, debug=debug)
