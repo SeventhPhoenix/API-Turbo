@@ -1,8 +1,6 @@
-from turbo.builder import FlaskAPI, request, abort, jsonify
+from turbo import FlaskAPI, request, abort, jsonify, validate_token
 
 app = FlaskAPI(__name__)
-
-TOKEN = '221124'
 
 # Home URL
 ## Extra path will show the same screen for any url past the /
@@ -17,9 +15,9 @@ def home(extra=None):
 @app.add_endpoint('/request/<path:extra>', methods=['POST'])
 def request_one(extra=None):
     request_token = request.headers.get('bearer')
-    if request_token != TOKEN:
+    if not validate_token(token=request_token):
         abort(403)
     return jsonify({'message': 'Token is valid'}), 200
 
 
-app.start_server(host='0.0.0.0', port='33212', debug=False)
+app.start_server(host='127.0.0.1', port=None, debug=False)
