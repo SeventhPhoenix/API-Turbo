@@ -24,7 +24,7 @@ def generate_token(user_id: int, user_name: str, expiration_hours: int = 1):
     payload = {
         'user_id': user_id,
         'user_name': user_name,
-        'iss': 'Creatonix.AI',
+        'iss': 'Issuer Name',
         'iat': current_time,
     }
 
@@ -53,7 +53,7 @@ def validate_token(token, pl=False):
     """
     try:
         # Decode the token
-        payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'], verify=True, issuer='Creatonix.AI')
+        payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'], verify=True, issuer='Issuer Name')
         
         print('\nValid Token\n')
         return True if not pl else payload
